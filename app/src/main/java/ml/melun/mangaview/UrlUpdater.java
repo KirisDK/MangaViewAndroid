@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Response;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import static ml.melun.mangaview.MainApplication.httpClient;
 import static ml.melun.mangaview.MainApplication.p;
@@ -36,6 +39,28 @@ public class UrlUpdater extends AsyncTask<Void, Void, Boolean> {
     }
 
     protected Boolean fetch(){
+        try {
+            // URL에서 HTML을 가져옵니다.
+            String url = "https://www.xn--h10b2b940bwzy.store/";
+            Document document = Jsoup.connect(url).get();
+
+            // 정확히 <a> 태그에서 data-testid="linkElement"와 aria-label="마나토끼 바로가기"를 만족하는 엘리먼트 선택
+            Element linkElement = document.selectFirst("a[data-testid=\"linkElement\"][aria-label=\"마나토끼 바로가기\"]");
+
+            // href 속성을 반환
+            if (linkElement != null) {
+                result = linkElement.attr("href");
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Deprecated
+    protected Boolean fetch_(){
         try {
             Map<String, String> headers = new HashMap<>();
             headers.put("User-Agent", "Mozilla/5.0 (Linux; U; Android 4.0.2; en-us; Galaxy Nexus Build/ICL53F) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30");
