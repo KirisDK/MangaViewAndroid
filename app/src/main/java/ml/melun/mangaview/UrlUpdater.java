@@ -42,7 +42,7 @@ public class UrlUpdater extends AsyncTask<Void, Void, Boolean> {
     protected Boolean fetch() {
         try {
             // 1. Jsoup으로 HTML 페이지를 가져옵니다.
-            String url = "https://t.me/s/newtoki5";
+            String url = "https://t.me/s/p48v267tsgubym7";
             Document document = Jsoup.connect(url).get();
 
             // 2. 텍스트 "manatoki"를 포함하는 <a> 태그를 선택
